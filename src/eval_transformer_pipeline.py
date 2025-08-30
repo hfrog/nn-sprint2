@@ -23,6 +23,7 @@ def eval_transformer(datafile, rouge):
     kds1 = KeyDataset(Dataset.from_list(val_x), 'text')
 
     model_name = 'distilgpt2'
+    print(f'Transformer {model_name}:')
     tokenizer = AutoTokenizer.from_pretrained(model_name, truncation=True, padding_side='left', padding='max_length', max_length=MAX_LEN)
     tokenizer.pad_token_id = tokenizer.eos_token_id
     device = 'cuda' if torch.cuda.is_available() else 'cpu'

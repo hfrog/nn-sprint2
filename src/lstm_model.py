@@ -25,8 +25,9 @@ class LSTM(nn.Module):
 
     def gen_next(self, ids, n=1):
         input_len = len(ids)
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
         for _ in range(n):
-            out = self.forward(torch.tensor([ids]), torch.tensor([len(ids)]))
+            out = self.forward(torch.tensor([ids]).to(device), torch.tensor([len(ids)]).to(device))
             next_id = torch.argmax(out).tolist()
             ids.append(next_id)
         return ids[input_len:]

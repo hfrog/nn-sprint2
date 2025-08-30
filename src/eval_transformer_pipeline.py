@@ -41,4 +41,4 @@ def eval_transformer(datafile, rouge):
     print('Samples:')
     for i in range(5):
         rnd = random.randrange(len(kds1))
-        print(f'{val_x[rnd]['text']} => {results[rnd]} ({val_labels[rnd]})')
+        print(f'{val_x[rnd]["text"]} => {results[rnd]} ({val_labels[rnd]})')

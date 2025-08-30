@@ -62,7 +62,8 @@ class TextDataset(Dataset):
             self.targets.append(a[input_len:])
 
     def __getitem__(self, idx):
-        return torch.tensor(self.inputs[idx]), self.targets[idx]
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        return torch.tensor(self.inputs[idx]).to(device), self.targets[idx]
 
     def __len__(self):
         return len(self.inputs)

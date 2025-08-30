@@ -3,7 +3,7 @@
 from tqdm import tqdm
 from eval_lstm import MyEvaluate
 
-N_EPOCHS = 1
+N_EPOCHS = 3
 
 def train(model, train_dataloader, val_dataloader, tokenizer, optimizer, criterion, rouge):
     for epoch in range(N_EPOCHS):

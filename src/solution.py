@@ -21,9 +21,9 @@ basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 datadir = os.path.join(basedir, 'data')
 
 #DATAFILE = os.path.join(datadir, 'raw_dataset.csv')
-#DATAFILE = os.path.join(datadir, 'raw_dataset-500k.csv')
+DATAFILE = os.path.join(datadir, 'raw_dataset-500k.csv')
 #DATAFILE = os.path.join(datadir, 'raw_dataset-100k.csv')
-DATAFILE = os.path.join(datadir, 'raw_dataset-10k.csv')
+#DATAFILE = os.path.join(datadir, 'raw_dataset-10k.csv')
 
 
 TRAIN_PART = 0.8
@@ -32,8 +32,9 @@ TEST_PART  = 0.1
 
 
 def collate_fn(batch):
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     texts = [item[0] for item in batch]
-    labels = torch.tensor([item[1][0] for item in batch])
+    labels = torch.tensor([item[1][0] for item in batch]).to(device)
     lengths = torch.tensor([len(seq) for seq in texts])
     padded_texts = pad_sequence(texts, batch_first=True, padding_value=tokenizer.pad())
 
@@ -62,8 +63,8 @@ train_dataset = TextDataset(tokenized[:train_len])
 val_dataset = TextDataset(tokenized[train_len:train_len+val_len])
 test_dataset = TextDataset(tokenized[train_len+val_len:])
 
-BATCH_SIZE = 64
-#BATCH_SIZE = 256
+#BATCH_SIZE = 64
+BATCH_SIZE = 256
 
 train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
 val_dataloader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)

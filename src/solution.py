@@ -17,10 +17,14 @@ from lstm_train import train
 from data_utils import TextDataset, Tokenizer, read_datafile, save_datafile, clean_string
 from eval_transformer_pipeline import eval_transformer
 
-#DATAFILE = '../data/raw_dataset.csv'
-#DATAFILE = '../data/raw_dataset-500k.csv'
-#DATAFILE = '../data/raw_dataset-100k.csv'
-DATAFILE = '../data/raw_dataset-10k.csv'
+basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+datadir = os.path.join(basedir, 'data')
+
+#DATAFILE = os.path.join(datadir, 'raw_dataset.csv')
+#DATAFILE = os.path.join(datadir, 'raw_dataset-500k.csv')
+#DATAFILE = os.path.join(datadir, 'raw_dataset-100k.csv')
+DATAFILE = os.path.join(datadir, 'raw_dataset-10k.csv')
+
 
 TRAIN_PART = 0.8
 VAL_PART   = 0.1

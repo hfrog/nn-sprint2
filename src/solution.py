@@ -51,10 +51,10 @@ train_len = int(TRAIN_PART * len(clean_datafile))
 val_len = int(VAL_PART * len(clean_datafile))
 test_len = int(TEST_PART * len(clean_datafile))
 
-save_datafile(re.sub('.csv', '-full.csv', DATAFILE), clean_datafile)
-save_datafile(re.sub('.csv', '-train.csv', DATAFILE), clean_datafile[:train_len])
-save_datafile(re.sub('.csv', '-val.csv', DATAFILE), clean_datafile[train_len:train_len+val_len])
-save_datafile(re.sub('.csv', '-test.csv', DATAFILE), clean_datafile[train_len+val_len:])
+#save_datafile(re.sub('.csv', '-full.csv', DATAFILE), clean_datafile)
+#save_datafile(re.sub('.csv', '-train.csv', DATAFILE), clean_datafile[:train_len])
+#save_datafile(re.sub('.csv', '-val.csv', DATAFILE), clean_datafile[train_len:train_len+val_len])
+#save_datafile(re.sub('.csv', '-test.csv', DATAFILE), clean_datafile[train_len+val_len:])
 
 tokenizer = Tokenizer(clean_datafile)
 tokenized = [tokenizer.encode(line) for line in clean_datafile]

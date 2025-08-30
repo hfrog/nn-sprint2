@@ -15,6 +15,7 @@ from tqdm import tqdm
 from lstm_model import LSTM
 from lstm_train import train
 from data_utils import TextDataset, Tokenizer, read_datafile, save_datafile, clean_string
+from eval_transformer_pipeline import eval_transformer
 
 #DATAFILE = '../data/raw_dataset.csv'
 #DATAFILE = '../data/raw_dataset-500k.csv'
@@ -67,7 +68,9 @@ test_dataloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False,
 HIDDEN_DIM = 128
 vocab_size = tokenizer.vocab_size()
 
-model = LSTM(vocab_size, HIDDEN_DIM, padding_idx=tokenizer.pad())
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f'using device {device}')
+model = LSTM(vocab_size, HIDDEN_DIM, padding_idx=tokenizer.pad()).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.002)
 criterion = nn.CrossEntropyLoss()
 rouge = evaluate.load('rouge')
@@ -95,3 +98,6 @@ for i in range(5):
     output = ' '.join(tokenizer.decode(model.gen_next(input, 16)))
     reference = ' '.join(tokenizer.decode(test_dataset[rnd][1]))
     print(f'{input_str} => {output} ({reference})')
+
+val_datafile = read_datafile(re.sub('.csv', '-val.csv', DATAFILE))
+eval_transformer(val_datafile, rouge)
